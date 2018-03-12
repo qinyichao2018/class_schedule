@@ -28,6 +28,12 @@
     <li>
         <a href="#">问答</a>
     </li>
+    <li>
+        <a href="{:url('user/login')}">登录</a>
+    </li>
+    <li>
+        <a href="#">注册</a>
+    </li>
 </ul>
 
 
@@ -37,6 +43,7 @@
         <span class="input-group-btn"><button class="btn btn-default" type="submit">查找课表</button></span>
     </div>
 </div>
+<label class=""></label>
 <table class="table table-bordered">
     <thead>
     <tr class="action">
@@ -69,17 +76,17 @@
     <tbody>
     <tr class="success">
         <td>1</td>
-        <td>{$mon['section_1']}<a href="{:url('notes',array('id'=>1))}">查看笔记</a></td>
-        <td>{$tue['section_1']}<a href="{:url('notes')}">查看笔记</a></td>
-        <td>{$wed['section_1']}<a href="{:url('notes')}">查看笔记</a></td>
-        <td>{$thu['section_1']}<a href="{:url('notes')}">查看笔记</a></td>
-        <td>{$fri['section_1']}<a href="{:url('notes')}">查看笔记</a></td>
-        <td>{$sat['section_1']}<a href="{:url('notes')}">查看笔记</a></td>
-        <td>{$sun['section_1']}<a href="{:url('notes')}">查看笔记</a></td>
+        <td>{$mon['section_1']}<a href="{:url('note_student_list',array('id'=>1))}">查看笔记</a></td>
+        <td>{$tue['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
+        <td>{$wed['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
+        <td>{$thu['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
+        <td>{$fri['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
+        <td>{$sat['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
+        <td>{$sun['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
     </tr>
     <tr class="info">
         <td>2</td>
-        <td>{$mon['section_2']}<a href="{:url('notes')}">查看笔记</a></td>
+        <td>{$mon['section_2']}<a href="{:url('note_student_list')}">查看笔记</a></td>
         <td>{$tue['section_2']}</td>
         <td>{$wed['section_2']}</td>
         <td>{$thu['section_2']}</td>
@@ -175,5 +182,6 @@
     </tr>
     </tbody>
 </table>
+<span class="help-block">{$sch_info.school_name}{$sch_info.class_name}{$sch_info.schedule_name}</span>
 </body>
 </html>
