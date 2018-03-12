@@ -40,7 +40,7 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon">姓名</span>
-                <input type="text" class="form-control" name="student_name" placeholder="张三">
+                <input type="text" class="form-control" name="student_name" placeholder="王杰">
             </div>
         </div>
         <br>
@@ -71,8 +71,14 @@
                 url: "{:url('check_login')}",  //设置提交数据处理的脚本文件的地址；
                 data: $("form").serialize(),   //将当前表单的数据序列化后提交
                 dataType: 'json',              //设置提交数据的类型为json
-                success: function () {          //只有标志位返回为1时才进行处理
+                success: function (data) {          //只有标志位返回为1时才进行处理
 
+                    if (data.status == 1) {
+                        alert(data.message);      //弹出提示验证成功
+                        window.location.href = "{:url('index/index')}"; //允许用户进入后台
+                    } else {
+                        alert(data.message);      //输出错误信息
+                    }
                 }
             })
         })
