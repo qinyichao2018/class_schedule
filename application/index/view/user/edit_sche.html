@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <title>Title</title>
+</head>
+<body>
+<ul class="nav nav-pills">
+    <li><a href="{:url('student_index')}">&nbsp;&nbsp;返&nbsp;&nbsp;回&nbsp;&nbsp;</a></li>
+</ul>
+<!--我的课表-->
+
+
+<form method="post" action="">
+    <label class=""></label>
+    <table class="table table-bordered">
+        <thead>
+        <tr class="action">
+            <th>上课时间</th>
+            <th>星期一</th>
+            <th>星期二</th>
+            <th>星期三</th>
+            <th>星期四</th>
+            <th>星期五</th>
+            <th>星期六</th>
+            <th>星期日</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="success">
+            <td>
+                第一节
+            </td>
+            <td><input type="text" name="mon1" value="{$mon['section_1']|default=''}"></td>
+            <td><input type="text" name="tue1" value="{$tue['section_1']|default=''}"></td>
+            <td><input type="text" name="wed1" value="{$wed['section_1']|default=''}"></td>
+            <td><input type="text" name="thu1" value="{$thu['section_1']|default=''}"></td>
+            <td><input type="text" name="fri1" value="{$fri['section_1']|default=''}"></td>
+            <td><input type="text" name="sat1" value="{$sat['section_1']|default=''}"></td>
+            <td><input type="text" name="sun1" value="{$sun['section_1']|default=''}"></td>
+        </tr>
+        <td>
+            第二节
+        </td>
+        <td><input type="text" name="mon2" value="{$mon['section_2']|default=''}"></td>
+        <td><input type="text" name="tue2" value="{$tue['section_2']|default=''}"></td>
+        <td><input type="text" name="wed2" value="{$wed['section_2']|default=''}"></td>
+        <td><input type="text" name="thu2" value="{$thu['section_2']|default=''}"></td>
+        <td><input type="text" name="fri2" value="{$fri['section_2']|default=''}"></td>
+        <td><input type="text" name="sat2" value="{$sat['section_2']|default=''}"></td>
+        <td><input type="text" name="sun2" value="{$sun['section_2']|default=''}"></td>
+        </tr>
+        <tr class="success">
+            <td>
+                第三节
+            </td>
+            <td><input type="text" name="mon3" value="{$mon['section_3']|default=''}"></td>
+            <td><input type="text" name="tue3" value="{$tue['section_3']|default=''}"></td>
+            <td><input type="text" name="wed3" value="{$wed['section_3']|default=''}"></td>
+            <td><input type="text" name="thu3" value="{$thu['section_3']|default=''}"></td>
+            <td><input type="text" name="fri3" value="{$fri['section_3']|default=''}"></td>
+            <td><input type="text" name="sat3" value="{$sat['section_3']|default=''}"></td>
+            <td><input type="text" name="sun3" value="{$sun['section_3']|default=''}"></td>
+        </tr>
+        <tr class="info">
+            <td>
+                第四节
+            </td>
+            <td><input type="text" name="mon4" value="{$mon['section_4']|default=''}"></td>
+            <td><input type="text" name="tue4" value="{$tue['section_4']|default=''}"></td>
+            <td><input type="text" name="wed4" value="{$wed['section_4']|default=''}"></td>
+            <td><input type="text" name="thu4" value="{$thu['section_4']|default=''}"></td>
+            <td><input type="text" name="fri4" value="{$fri['section_4']|default=''}"></td>
+            <td><input type="text" name="sat4" value="{$sat['section_4']|default=''}"></td>
+            <td><input type="text" name="sun4" value="{$sun['section_4']|default=''}"></td>
+        </tr>
+        <tr>
+            <td>午休</td>
+        </tr>
+        <tr class="success">
+            <td>
+                第五节
+            </td>
+            <td><input type="text" name="mon5" value="{$mon['section_5']|default=''}"></td>
+            <td><input type="text" name="tue5" value="{$tue['section_5']|default=''}"></td>
+            <td><input type="text" name="wed5" value="{$wed['section_5']|default=''}"></td>
+            <td><input type="text" name="thu5" value="{$thu['section_5']|default=''}"></td>
+            <td><input type="text" name="fri5" value="{$fri['section_5']|default=''}"></td>
+            <td><input type="text" name="sat5" value="{$sat['section_5']|default=''}"></td>
+            <td><input type="text" name="sun5" value="{$sun['section_5']|default=''}"></td>
+        </tr>
+        <tr class="info">
+            <td>
+                第六节
+            </td>
+            <td><input type="text" name="mon6" value="{$mon['section_6']|default=''}"></td>
+            <td><input type="text" name="tue6" value="{$tue['section_6']|default=''}"></td>
+            <td><input type="text" name="wed6" value="{$wed['section_6']|default=''}"></td>
+            <td><input type="text" name="thu6" value="{$thu['section_6']|default=''}"></td>
+            <td><input type="text" name="fri6" value="{$fri['section_6']|default=''}"></td>
+            <td><input type="text" name="sat6" value="{$sat['section_6']|default=''}"></td>
+            <td><input type="text" name="sun6" value="{$sun['section_6']|default=''}"></td>
+        </tr>
+        <tr class="success">
+            <td>
+                第七节
+            </td>
+            <td><input type="text" name="mon7" value="{$mon['section_7']|default=''}"></td>
+            <td><input type="text" name="tue7" value="{$tue['section_7']|default=''}"></td>
+            <td><input type="text" name="wed7" value="{$wed['section_7']|default=''}"></td>
+            <td><input type="text" name="thu7" value="{$thu['section_7']|default=''}"></td>
+            <td><input type="text" name="fri7" value="{$fri['section_7']|default=''}"></td>
+            <td><input type="text" name="sat7" value="{$sat['section_7']|default=''}"></td>
+            <td><input type="text" name="sun7" value="{$sun['section_7']|default=''}"></td>
+        </tr>
+        <tr>
+            <td>晚饭</td>
+        </tr>
+        <tr class="info">
+            <td>
+                第八节
+            </td>
+            <td><input type="text" name="mon8" value="{$mon['section_8']|default=''}"></td>
+            <td><input type="text" name="tue8" value="{$tue['section_8']|default=''}"></td>
+            <td><input type="text" name="wed8" value="{$wed['section_8']|default=''}"></td>
+            <td><input type="text" name="thu8" value="{$thu['section_8']|default=''}"></td>
+            <td><input type="text" name="fri8" value="{$fri['section_8']|default=''}"></td>
+            <td><input type="text" name="sat8" value="{$sat['section_8']|default=''}"></td>
+            <td><input type="text" name="sun8" value="{$sun['section_8']|default=''}"></td>
+        </tr>
+        <tr class="success">
+            <td>
+                第九节
+            </td>
+            <td><input type="text" name="mon9" value="{$mon['section_9']|default=''}"></td>
+            <td><input type="text" name="tue9" value="{$tue['section_9']|default=''}"></td>
+            <td><input type="text" name="wed9" value="{$wed['section_9']|default=''}"></td>
+            <td><input type="text" name="thu9" value="{$thu['section_9']|default=''}"></td>
+            <td><input type="text" name="fri9" value="{$fri['section_9']|default=''}"></td>
+            <td><input type="text" name="sat9" value="{$sat['section_9']|default=''}"></td>
+            <td><input type="text" name="sun9" value="{$sun['section_9']|default=''}"></td>
+        </tr>
+        <tr class="info">
+            <td>
+                第十节
+            </td>
+            <td><input type="text" name="mon10" value="{$mon['section_10']|default=''}"></td>
+            <td><input type="text" name="tue10" value="{$tue['section_10']|default=''}"></td>
+            <td><input type="text" name="wed10" value="{$wed['section_10']|default=''}"></td>
+            <td><input type="text" name="thu10" value="{$thu['section_10']|default=''}"></td>
+            <td><input type="text" name="fri10" value="{$fri['section_10']|default=''}"></td>
+            <td><input type="text" name="sat10" value="{$sat['section_10']|default=''}"></td>
+            <td><input type="text" name="sun10" value="{$sun['section_10']|default=''}"></td>
+        </tr>
+
+
+        </tbody>
+    </table>
+    <div>
+        <input type="hidden" name="schedule_id" value={$schedule_id}>
+    </div>
+    <div class="col-md-1">
+        <p name="schedule_id">课表ID:{$schedule_id}</p>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group">
+            <input name="schedule_name" class="form-control" type="text" value="{$schedule_name}" placeholder="课表名">
+            <span class="input-group-btn">
+            <button class="btn btn-success" id="save" type="button">保存课表</button>
+        </span>
+        </div>
+    </div>
+</form>
+</body>
+
+<script>
+    $(function () {
+//给登录按钮添加点击事件
+        $("#save").on('click', function (event) {
+            $.ajax({
+                type: "POST",
+                url: "{:url('edit_save')}",  //设置提交数据处理的脚本文件的地址；
+                data: $("form").serialize(),   //将当前表单的数据序列化后提交
+                dataType: 'json',              //设置提交数据的类型为json
+                success: function (data) {
+                    console.log(data);
+                    alert(data.message);      //弹出提示验证成功
+                    // window.location.href = "{:url('student_index')}"; //允许用户进入后台
+
+                }
+            })
+        })
+    })
+</script>
+</html>

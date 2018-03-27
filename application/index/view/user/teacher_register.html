@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <title>Title</title>
+</head>
+<body>
+
+<div align="center">
+    <h1>教师课表注册系统</h1>
+    <img src="/image/teacher_default.jpg">
+    <form method="post" action="" class="form-inline">
+        <div>
+            <div class="input-group">
+                <span class="input-group-addon">&nbsp;学&nbsp;校&nbsp;名&nbsp;</span>
+                <input type="text" class="form-control" name="school_name" placeholder="灵川中学">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">&nbsp;&nbsp;学&nbsp;&nbsp;科&nbsp;&nbsp;</span>
+                <input type="text" class="form-control" name="Subject" placeholder="语文">
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="input-group">
+                <span class="input-group-addon">&nbsp;教&nbsp;师&nbsp;证&nbsp;</span>
+                <input type="text" class="form-control" name="teacher_number" placeholder=" 教师证号">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">&nbsp;&nbsp;姓&nbsp;&nbsp;名&nbsp;&nbsp;</span>
+                <input type="text" class="form-control" name="teacher_name" placeholder="王语嫣">
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="input-group">
+                <span class="input-group-addon">班主任<input type="checkbox" id="checkbox" name="checkbox"
+                                                          value="1"></span>
+                <input class="form-control" type="text" id="head_teacher" name="head_teacher" value=""
+                       placeholder="不勾选为非班主任" disabled>
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="input-group">
+                <span class="input-group-addon">&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp码&nbsp;&nbsp;</span>
+                <input class="form-control" type="password" name="password" placeholder="password">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">确认密码</span>
+                <input class="form-control" type="password" name="repassword" placeholder="password">
+            </div>
+        </div>
+
+        <br>
+        <div>
+            <div class="horizontal">
+                <input class="form-control" type="text" name="verification_code" placeholder="验证码">
+                <div>
+                    <img id="ver_img" src="{:captcha_src()}">
+                    <a id="kbq" href="javascript:refreshVerity();">看不清，换一张</a>
+                </div>
+                <br>
+                <input id="register" class="btn btn-success" type="button" value="注&nbsp;册">
+            </div>
+        </div>
+</div>
+</form>
+<script language="javascript">
+    $(function () {
+        $("#checkbox").change(function () {
+            if ($('#checkbox').is(':checked')) {
+                // do something
+                $('#head_teacher').attr("placeholder", "填写您的班级");
+                $('#head_teacher').removeAttr("disabled");
+            } else {
+                $('#head_teacher').attr("placeholder", "不勾选为非班主任");
+                $('#head_teacher').val("");
+                $('#head_teacher').attr("disabled", true);
+            }
+
+        });
+    });
+
+</script>
+<script>
+    $(function () {
+//给注册按钮添加点击事件
+        $("#register").on('click', function (event) {
+            $.ajax({
+                type: "POST",
+                url: "{:url('check_teacher_register')}",  //设置提交数据处理的脚本文件的地址；
+                data: $("form").serialize(),   //将当前表单的数据序列化后提交
+                dataType: 'json',              //设置提交数据的类型为json
+                success: function (data) {          //只有标志位返回为1时才进行处理
+
+                    if (data.status == 1) {
+                        alert(data.message);      //弹出提示验证成功
+                        window.location.href = "{:url('user/teacher_index')}"; //允许用户进入后台
+                    } else {
+                        alert(data.message);      //输出错误信息
+                    }
+                }
+            })
+        })
+    })
+</script>
+<!--//刷新验证码的脚本-->
+<script>
+    function refreshVerity() {
+        var ts = Date.parse(new Date()) / 1000;
+        $("#ver_img").attr("src", "/captcha?id=" + ts); //刷新验证码
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--下拉按钮-->
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<ul class="nav nav-pills">
+    <li><a href="#">广场</a></li>
+    <li><a href="#">下载</a></li>
+    <li><a href="#">问答</a></li>
+</ul>
+
+
+<div style="padding-left: 80%;">
+    <div class="btn-group">
+        <button type="button" class="btn-xs btn-info dropdown-toggle" data-toggle="dropdown">
+            <img alt="@{:session('user_info.student_name')}" class="avatar float-left mr-1"
+                 src="/image/teacher_default.jpg" height="20" width="20">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header header-nav-current-user css-truncate">
+                <strong class="css-truncate-target">教师登录<p style="color: lightseagreen">
+                    {:session('user_info.teacher_name')}</p></strong>
+            </li>
+            <li class="divider"></li> <!--分割线-->
+            <li><a href="{:url('teacher_personal_info')}">个人信息</a></li>
+            <li class="divider"></li> <!--分割线-->
+            <li><a href="{:url('management_work')}">管理工作表</a></li>
+            <li class="divider"></li> <!--分割线-->
+            <li><a href="{:url('management_class')}">管理班级课表</a></li>
+            <li class="divider"></li> <!--分割线-->
+            <li><a href="{:url('login_out')}">退出登录</a></li>
+        </ul>
+    </div>
+</div>
+<!--教师工作表-->
+
+<label class=""></label>
+<table class="table table-bordered">
+    <thead>
+    <tr class="action">
+        <th>工作时间</th>
+        <th>星期一</th>
+        <th>星期二</th>
+        <th>星期三</th>
+        <th>星期四</th>
+        <th>星期五</th>
+        <th>星期六</th>
+        <th>星期日</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="success">
+        <td>1</td>
+        <td>{$mon['section_1']|default=''}<a href="{:url('note_student_list',array('id'=>1))}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+        <td>{$tue['section_1']|default=''}<a href="{:url('note_student_list')}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+        <td>{$wed['section_1']|default=''}<a href="{:url('note_student_list')}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+        <td>{$thu['section_1']|default=''}<a href="{:url('note_student_list')}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+        <td>{$fri['section_1']|default=''}<a href="{:url('note_student_list')}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+        <td>{$sat['section_1']|default=''}<a href="{:url('note_student_list')}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+        <td>{$sun['section_1']|default=''}<a href="{:url('note_student_list')}">检查笔记</a>&nbsp;<a
+                href="{:url('note_student_list',array('id'=>1))}">工作进程</a></td>
+    </tr>
+    <tr class="info">
+        <td>2</td>
+        <td>{$mon['section_2']|default=''}<a href="{:url('note_student_list')}">检查笔记</a></td>
+        <td>{$tue['section_2']|default=''}</td>
+        <td>{$wed['section_2']|default=''}</td>
+        <td>{$thu['section_2']|default=''}</td>
+        <td>{$fri['section_2']|default=''}</td>
+        <td>{$sat['section_2']|default=''}</td>
+        <td>{$sun['section_2']|default=''}</td>
+    </tr>
+    <tr class="success">
+        <td>3</td>
+        <td>{$mon['section_3']|default=''}</td>
+        <td>{$tue['section_3']|default=''}</td>
+        <td>{$wed['section_3']|default=''}</td>
+        <td>{$thu['section_3']|default=''}</td>
+        <td>{$fri['section_3']|default=''}</td>
+        <td>{$sat['section_3']|default=''}</td>
+        <td>{$sun['section_3']|default=''}</td>
+    </tr>
+    <tr class="info">
+        <td>4</td>
+        <td>{$mon['section_4']|default=''}</td>
+        <td>{$tue['section_4']|default=''}</td>
+        <td>{$wed['section_4']|default=''}</td>
+        <td>{$thu['section_4']|default=''}</td>
+        <td>{$fri['section_4']|default=''}</td>
+        <td>{$sat['section_4']|default=''}</td>
+        <td>{$sun['section_4']|default=''}</td>
+    </tr>
+    <tr>
+        <td>午休</td>
+    </tr>
+    <tr class="success">
+        <td>5</td>
+        <td>{$mon['section_5']|default=''}</td>
+        <td>{$tue['section_5']|default=''}</td>
+        <td>{$wed['section_5']|default=''}</td>
+        <td>{$thu['section_5']|default=''}</td>
+        <td>{$fri['section_5']|default=''}</td>
+        <td>{$sat['section_5']|default=''}</td>
+        <td>{$sun['section_5']|default=''}</td>
+    </tr>
+    <tr class="info">
+        <td>6</td>
+        <td>{$mon['section_6']|default=''}</td>
+        <td>{$tue['section_6']|default=''}</td>
+        <td>{$wed['section_6']|default=''}</td>
+        <td>{$thu['section_6']|default=''}</td>
+        <td>{$fri['section_6']|default=''}</td>
+        <td>{$sat['section_6']|default=''}</td>
+        <td>{$sun['section_6']|default=''}</td>
+    </tr>
+    <tr class="success">
+        <td>7</td>
+        <td>{$mon['section_7']|default=''}</td>
+        <td>{$tue['section_7']|default=''}</td>
+        <td>{$wed['section_7']|default=''}</td>
+        <td>{$thu['section_7']|default=''}</td>
+        <td>{$fri['section_7']|default=''}</td>
+        <td>{$sat['section_7']|default=''}</td>
+        <td>{$sun['section_7']|default=''}</td>
+    </tr>
+    <tr>
+        <td>晚饭</td>
+    </tr>
+    <tr class="info">
+        <td>8</td>
+        <td>{$mon['section_8']|default=''}</td>
+        <td>{$tue['section_8']|default=''}</td>
+        <td>{$wed['section_8']|default=''}</td>
+        <td>{$thu['section_8']|default=''}</td>
+        <td>{$fri['section_8']|default=''}</td>
+        <td>{$sat['section_8']|default=''}</td>
+        <td>{$sun['section_8']|default=''}</td>
+    </tr>
+    <tr class="success">
+        <td>9</td>
+        <td>{$mon['section_9']|default=''}</td>
+        <td>{$tue['section_9']|default=''}</td>
+        <td>{$wed['section_9']|default=''}</td>
+        <td>{$thu['section_9']|default=''}</td>
+        <td>{$fri['section_9']|default=''}</td>
+        <td>{$sat['section_9']|default=''}</td>
+        <td>{$sun['section_9']|default=''}</td>
+    </tr>
+    <tr class="info">
+        <td>10</td>
+        <td>{$mon['section_10']|default=''}</td>
+        <td>{$tue['section_10']|default=''}</td>
+        <td>{$wed['section_10']|default=''}</td>
+        <td>{$thu['section_10']|default=''}</td>
+        <td>{$fri['section_10']|default=''}</td>
+        <td>{$sat['section_10']|default=''}</td>
+        <td>{$sun['section_10']|default=''}</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

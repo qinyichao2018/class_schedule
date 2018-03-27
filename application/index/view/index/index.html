@@ -9,7 +9,8 @@
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
+    <!--下拉按钮-->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -18,170 +19,342 @@
     <title>Title</title>
 </head>
 <body>
+
 <ul class="nav nav-pills">
+    <li><a href="{:url('square')}">广场</a></li>
+    <li><a href="{:url('download')}">下载</a></li>
+    <li><a href="{:url('questionAnswer')}">问答</a></li>
     <li>
-        <a href="#">广场</a>
+        <ul class="nav nav-tabs">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">注册
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{:url('user/student_register')}">学生注册</a></li>
+                    <li><a href="{:url('user/teacher_register')}">教师注册</a></li>
+                </ul>
+            </li>
+            <li>
+        </ul>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        </ul>
+
     </li>
     <li>
-        <a href="#">下载</a>
+        <ul class="nav nav-tabs">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">登录
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{:url('user/student_login')}">学生登录</a></li>
+                    <li><a href="{:url('user/teacher_login')}">教师登录</a></li>
+                </ul>
+            </li>
+            <li>
+        </ul>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        </ul>
+
     </li>
-    <li>
-        <a href="#">问答</a>
-    </li>
-    <li>
-        <a href="{:url('user/login')}">登录</a>
-    </li>
-    <li>
-        <a href="#">注册</a>
-    </li>
+
 </ul>
 
-
-<div class="col-xs-4">
-    <div class="input-group">
-        <input class="form-control" type="text" placeholder="学校-班级">
-        <span class="input-group-btn"><button class="btn btn-default" type="submit">查找课表</button></span>
+<form method="post" action="">
+    <div class="col-xs-4">
+        <div class="input-group">
+            <input name="text" class="form-control" type="text" placeholder="学校-班级 或者只输入班级、学校">
+            <span class="input-group-btn">
+            <button class="btn btn-default" id="searchSchedule" type="button">查找课表</button>
+        </span>
+        </div>
     </div>
-</div>
+</form>
+
+
 <label class=""></label>
+
 <table class="table table-bordered">
     <thead>
     <tr class="action">
-        <th>
-            上课时间
-        </th>
-        <th>
-            星期一
-        </th>
-        <th>
-            星期二
-        </th>
-        <th>
-            星期三
-        </th>
-        <th>
-            星期四
-        </th>
-        <th>
-            星期五
-        </th>
-        <th>
-            星期六
-        </th>
-        <th>
-            星期日
-        </th>
+        <th>上课时间</th>
+        <th>星期一</th>
+        <th>星期二</th>
+        <th>星期三</th>
+        <th>星期四</th>
+        <th>星期五</th>
+        <th>星期六</th>
+        <th>星期日</th>
     </tr>
     </thead>
     <tbody>
     <tr class="success">
-        <td>1</td>
-        <td>{$mon['section_1']}<a href="{:url('note_student_list',array('id'=>1))}">查看笔记</a></td>
-        <td>{$tue['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
-        <td>{$wed['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
-        <td>{$thu['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
-        <td>{$fri['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
-        <td>{$sat['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
-        <td>{$sun['section_1']}<a href="{:url('note_student_list')}">查看笔记</a></td>
+        <td>第一节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_1'))}">{$mon['section_1']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_1'))}">{$tue['section_1']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_1'))}">{$wed['section_1']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_1'))}">{$thu['section_1']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_1'))}">{$fri['section_1']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_1'))}">{$sat['section_1']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_1'))}">{$sun['section_1']|default=''}</a>
+        </td>
     </tr>
     <tr class="info">
-        <td>2</td>
-        <td>{$mon['section_2']}<a href="{:url('note_student_list')}">查看笔记</a></td>
-        <td>{$tue['section_2']}</td>
-        <td>{$wed['section_2']}</td>
-        <td>{$thu['section_2']}</td>
-        <td>{$fri['section_2']}</td>
-        <td>{$sat['section_2']}</td>
-        <td>{$sun['section_2']}</td>
+        <td>第二节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_2'))}">{$mon['section_2']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_2'))}">{$tue['section_2']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_2'))}">{$wed['section_2']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_2'))}">{$thu['section_2']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_2'))}">{$fri['section_2']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_2'))}">{$sat['section_2']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_2'))}">{$sun['section_2']|default=''}</a>
+        </td>
     </tr>
     <tr class="success">
-        <td>3</td>
-        <td>{$mon['section_3']}</td>
-        <td>{$tue['section_3']}</td>
-        <td>{$wed['section_3']}</td>
-        <td>{$thu['section_3']}</td>
-        <td>{$fri['section_3']}</td>
-        <td>{$sat['section_3']}</td>
-        <td>{$sun['section_3']}</td>
+        <td>第三节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_3'))}">{$mon['section_3']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_3'))}">{$tue['section_3']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_3'))}">{$wed['section_3']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_3'))}">{$thu['section_3']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_3'))}">{$fri['section_3']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_3'))}">{$sat['section_3']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_3'))}">{$sun['section_3']|default=''}</a>
+        </td>
     </tr>
     <tr class="info">
-        <td>4</td>
-        <td>{$mon['section_4']}</td>
-        <td>{$tue['section_4']}</td>
-        <td>{$wed['section_4']}</td>
-        <td>{$thu['section_4']}</td>
-        <td>{$fri['section_4']}</td>
-        <td>{$sat['section_4']}</td>
-        <td>{$sun['section_4']}</td>
+        <td>第四节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_4'))}">{$mon['section_4']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_4'))}">{$tue['section_4']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_4'))}">{$wed['section_4']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_4'))}">{$thu['section_4']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_4'))}">{$fri['section_4']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_4'))}">{$sat['section_4']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_4'))}">{$sun['section_4']|default=''}</a>
+        </td>
     </tr>
     <tr>
         <td>午休</td>
     </tr>
     <tr class="success">
-        <td>5</td>
-        <td>{$mon['section_5']}</td>
-        <td>{$tue['section_5']}</td>
-        <td>{$wed['section_5']}</td>
-        <td>{$thu['section_5']}</td>
-        <td>{$fri['section_5']}</td>
-        <td>{$sat['section_5']}</td>
-        <td>{$sun['section_5']}</td>
+        <td>第五节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_5'))}">{$mon['section_5']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_5'))}">{$tue['section_5']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_5'))}">{$wed['section_5']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_5'))}">{$thu['section_5']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_5'))}">{$fri['section_5']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_5'))}">{$sat['section_5']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_5'))}">{$sun['section_5']|default=''}</a>
+        </td>
     </tr>
     <tr class="info">
-        <td>6</td>
-        <td>{$mon['section_6']}</td>
-        <td>{$tue['section_6']}</td>
-        <td>{$wed['section_6']}</td>
-        <td>{$thu['section_6']}</td>
-        <td>{$fri['section_6']}</td>
-        <td>{$sat['section_6']}</td>
-        <td>{$sun['section_6']}</td>
+        <td>第六节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_6'))}">{$mon['section_6']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_6'))}">{$tue['section_6']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_6'))}">{$wed['section_6']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_6'))}">{$thu['section_6']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_6'))}">{$fri['section_6']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_6'))}">{$sat['section_6']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_6'))}">{$sun['section_6']|default=''}</a>
+        </td>
     </tr>
     <tr class="success">
-        <td>7</td>
-        <td>{$mon['section_7']}</td>
-        <td>{$tue['section_7']}</td>
-        <td>{$wed['section_7']}</td>
-        <td>{$thu['section_7']}</td>
-        <td>{$fri['section_7']}</td>
-        <td>{$sat['section_7']}</td>
-        <td>{$sun['section_7']}</td>
+        <td>第七节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_7'))}">{$mon['section_7']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_7'))}">{$tue['section_7']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_7'))}">{$wed['section_7']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_7'))}">{$thu['section_7']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_7'))}">{$fri['section_7']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_7'))}">{$sat['section_7']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_7'))}">{$sun['section_7']|default=''}</a>
+        </td>
     </tr>
     <tr>
         <td>晚饭</td>
     </tr>
     <tr class="info">
-        <td>8</td>
-        <td>{$mon['section_8']}</td>
-        <td>{$tue['section_8']}</td>
-        <td>{$wed['section_8']}</td>
-        <td>{$thu['section_8']}</td>
-        <td>{$fri['section_8']}</td>
-        <td>{$sat['section_8']}</td>
-        <td>{$sun['section_8']}</td>
+        <td>第八节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_8'))}">{$mon['section_8']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_8'))}">{$tue['section_8']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_8'))}">{$wed['section_8']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_8'))}">{$thu['section_8']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_8'))}">{$fri['section_8']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_8'))}">{$sat['section_8']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_8'))}">{$sun['section_8']|default=''}</a>
+        </td>
     </tr>
     <tr class="success">
-        <td>9</td>
-        <td>{$mon['section_9']}</td>
-        <td>{$tue['section_9']}</td>
-        <td>{$wed['section_9']}</td>
-        <td>{$thu['section_9']}</td>
-        <td>{$fri['section_9']}</td>
-        <td>{$sat['section_9']}</td>
-        <td>{$sun['section_9']}</td>
+        <td>第九节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_9'))}">{$mon['section_9']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_9'))}">{$tue['section_9']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_9'))}">{$wed['section_9']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_9'))}">{$thu['section_9']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_9'))}">{$fri['section_9']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_9'))}">{$sat['section_9']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_9'))}">{$sun['section_9']|default=''}</a>
+        </td>
     </tr>
     <tr class="info">
-        <td>10</td>
-        <td>{$mon['section_10']}</td>
-        <td>{$tue['section_10']}</td>
-        <td>{$wed['section_10']}</td>
-        <td>{$thu['section_10']}</td>
-        <td>{$fri['section_10']}</td>
-        <td>{$sat['section_10']}</td>
-        <td>{$sun['section_10']}</td>
+        <td>第十节</td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'monday','section'=>'section_10'))}">{$mon['section_10']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'tuesday','section'=>'section_10'))}">{$tue['section_10']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'wednesday','section'=>'section_10'))}">{$wed['section_10']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'thursday','section'=>'section_10'))}">{$thu['section_10']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'friday','section'=>'section_10'))}">{$fri['section_10']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'saturday','section'=>'section_10'))}">{$sat['section_10']|default=''}</a>
+        </td>
+        <td>
+            <a href="{:url('index/note_student_list',array('schedule_id'=>$schedule_id,'week'=>'sunday','section'=>'section_10'))}">{$sun['section_10']|default=''}</a>
+        </td>
     </tr>
     </tbody>
 </table>
-<span class="help-block">{$sch_info.school_name}{$sch_info.class_name}{$sch_info.schedule_name}</span>
+<span class="help-block">{$sch_info.school_name}{$sch_info.class_name}班{$sch_info.schedule_name}----上次更新:{$updated}</span>
 </body>
+<script>
+    $(function () {
+        $('#searchSchedule').on('click',function (event) {
+            $.ajax({
+                type:"POST",
+                url:"{:url('search_check')}",
+                data:$('form').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    if (data.status){
+                        window.location.href = "{:url('search')}";
+                    }else{
+                        alert(data.message);
+                    }
+                }
+            })
+        })
+
+    })
+</script>
 </html>

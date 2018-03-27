@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -18,11 +19,90 @@
     <title>Title</title>
 </head>
 <body>
-19240148190
-<div class="form-group">
-    <input placeholder="输入验证码">
-    <div>{:captcha_img()}</div>
-    <input type="button" value="$nbsp;">
+<ul class="nav nav-pills">
+    {eq name="user_identity" value="0"}
+    <li>
+        <a href="{:url('index')}">
+            返回
+        </a>
+    </li>
+    {/eq}
+    {eq name="user_identity" value="1"}
+    <li>
+        <a href="{:url('user/student_index')}">
+            返回
+        </a>
+    </li>
+    {/eq}
+    <li>
+        <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes2['week_name'],'student_name'=>$notes2['student_name'],'section_name'=>$notes2['section_name']))}">
+            {$title}
+        </a>
+    </li>
+</ul>
+<div align="center">
+    <h1>已上传的笔记</h1>
+
+    {for start="0" end="$num"}
+    <ul class="nav nav-pills">
+        {elt name="$i" value="$num1"}
+        <li>
+
+            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+                {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
+            </a>
+
+            <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
+            <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>
+        </li>
+        {/elt}
+        {elt name="$i" value="$num1"}
+        <li>
+
+            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+                {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
+            </a>
+            <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
+            <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>
+        </li>
+        {/elt}
+        {elt name="$i" value="$num1"}
+        <li>
+            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+                {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
+            </a>
+            <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
+            <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>
+        </li>
+        {/elt}
+        {elt name="$i" value="$num1"}
+        <li>
+            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+                {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
+            </a>
+            <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
+            <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>
+        </li>
+        {/elt}
+        {elt name="$i" value="$num1"}
+        <li>
+            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+                {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
+            </a>
+            <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
+            <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>
+        </li>
+        {/elt}
+        {elt name="$i" value="$num1"}
+        <li>
+            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+                {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}</a>
+            <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
+            <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>
+        </li>
+        {/elt}
+    </ul>
+    {/for}
 </div>
 
 </body>
