@@ -48,7 +48,7 @@
         {elt name="$i" value="$num1"}
         <li>
 
-            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+            <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes[$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
                 {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
             </a>
 
@@ -59,7 +59,7 @@
         {elt name="$i" value="$num1"}
         <li>
 
-            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+            <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
                 {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
             </a>
             <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
@@ -68,7 +68,7 @@
         {/elt}
         {elt name="$i" value="$num1"}
         <li>
-            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+            <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
                 {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
             </a>
             <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
@@ -77,7 +77,7 @@
         {/elt}
         {elt name="$i" value="$num1"}
         <li>
-            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+            <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
                 {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
             </a>
             <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
@@ -86,7 +86,7 @@
         {/elt}
         {elt name="$i" value="$num1"}
         <li>
-            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+            <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
                 {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}
             </a>
             <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
@@ -95,7 +95,7 @@
         {/elt}
         {elt name="$i" value="$num1"}
         <li>
-            <a href="{:url('note_wall',array('week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
+            <a href="{:url('note_wall',array('schedule_id'=>$notes2['schedule_id'],'week_name'=>$notes[$i]['week_name'],'week_name'=>$notes[++$i]['week_name'],'student_name'=>$notes[$i]['student_name'],'section_name'=>$notes[$i]['section_name']))}">
                 {$num2[$i]}&nbsp;&nbsp;&nbsp;{$notes[$i]['student_name']}</a>
             <div>{$c_u_text2[$i][0]}{$notes[$i]['created_at']}&nbsp;&nbsp;&nbsp;</div>
             <div>{$c_u_text2[$i][1]}{$notes[$i]['updated_at']}</div>

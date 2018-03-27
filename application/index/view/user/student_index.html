@@ -39,9 +39,9 @@
             </li>
             <li class="divider"></li> <!--分割线-->
             <li><a href="{:url('student_personal_info')}">个人信息</a></li>
-            <li><a href="{:url('edit_sche')}">编辑课表</a></li>
+            <li><a href="{:url('edit_sche',array('if_default'=>'yes'))}">编辑课表</a></li>
             <li><a href="{:url('schedule_list')}">我的课表</a></li>
-            <li><a href="{:url('new_schedule')}">创建新课表</a></li>
+            <li><a onclick="schedule_check(this,'{$schedule_check}')" href="javascript:;">创建新课表</a></li>
             <li class="divider"></li> <!--分割线-->
             <li><a href="{:url('login_out')}">退出登录</a></li>
         </ul>
@@ -329,16 +329,16 @@
 </body>
 <script>
     $(function () {
-        $('#searchSchedule').on('click',function (event) {
+        $('#searchSchedule').on('click', function (event) {
             $.ajax({
-                type:"POST",
-                url:"{:url('index/search_check')}",
-                data:$('form').serialize(),
-                dataType:'json',
-                success:function (data) {
-                    if (data.status){
+                type: "POST",
+                url: "{:url('index/search_check')}",
+                data: $('form').serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status) {
                         window.location.href = "{:url('index/search')}";
-                    }else{
+                    } else {
                         alert(data.message);
                     }
                 }
@@ -346,5 +346,15 @@
         })
 
     })
+</script>
+<script>
+    function schedule_check(obj,schedule_check) {
+        if (schedule_check == 'yes') {
+            window.location.href = "{:url('new_schedule')}";
+        }
+        if(schedule_check == 'no') {
+            alert('创建课表数量超过上限，请删除部分课表后操作');
+        }
+    }
 </script>
 </html>

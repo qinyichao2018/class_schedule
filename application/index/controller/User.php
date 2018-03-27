@@ -331,14 +331,15 @@ class User extends Controller
     public function student_index()
     {
         $post_data = session('user_info');
+        $schedule_check = 'yes';
         $map2 = Often::mapWeek();
         //分割线
 //        var_dump($post_data);exit();
-        if($post_data['default_schedule'] == null){
+        if ($post_data['default_schedule'] == null) {
             $map_schedule = [
                 'class_name' => $post_data['class_name'],
                 'school_name' => $post_data['school_name'],
-                'founder'=> $post_data['student_name'],
+                'founder' => $post_data['student_name'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -363,22 +364,35 @@ class User extends Controller
                 'friday_id' => $friday['friday_id'],
                 'saturday_id' => $saturday['saturday_id'],
                 'sunday_id' => $sunday['sunday_id'],
-                'if_public'=> 'yes',
-                'founder'=>$post_data['student_name'],
-                'schedule_name'=>'初始课表',
+                'if_public' => 'yes',
+                'founder' => $post_data['student_name'],
+                'schedule_name' => '初始课表',
             ];
             Db::name('schedule_info')->insert($map_schedule2);
             $new_schedule = Db::name('schedule_info')->where($map_schedule2)->find();
-            Db::name('student')->where('student_id',$post_data['student_id'])->update(['default_schedule'=>$new_schedule['schedule_id'],'schedule_list'=>$new_schedule['schedule_id']]);
-            $user_info1 =  Db::name('student')->where('student_id',$post_data['student_id'])->find();
-            session('user_info',$user_info1);
-        }else{
-            $new_schedule = Db::name('schedule_info')->where( 'schedule_id',$post_data['default_schedule'])->find();
+            Db::name('student')->where('student_id', $post_data['student_id'])->update(['default_schedule' => $new_schedule['schedule_id']]);
+            $user_info1 = Db::name('student')->where('student_id', $post_data['student_id'])->find();
+            session('user_info', $user_info1);
+        } else {
+            $new_schedule = Db::name('schedule_info')->where('schedule_id', $post_data['default_schedule'])->find();
+            $user_info1 = Db::name('student')->where('student_id', $post_data['student_id'])->find();
+            session('user_info', $user_info1);
         }
         //分割线
 
         $get_schedule = Search::get_scheduleAll($map2, $new_schedule);
         $ago = Convert::time_ago($new_schedule['updated_at']);
+        $map_total = [
+            'school_name' => $post_data['student_name'],
+            'class_name' => $post_data['class_name'],
+            'founder' => $post_data['student_name'],
+        ];
+        $schedule_total = Db::name('schedule_info')->where($map_total)->select();
+
+        if (count($schedule_total) > 9) {
+            $schedule_check = 'no';
+        }
+
         $this->assign('mon', $get_schedule[0]);
         $this->assign('tue', $get_schedule[1]);
         $this->assign('wed', $get_schedule[2]);
@@ -389,6 +403,7 @@ class User extends Controller
         $this->assign('schedule_id', $new_schedule['schedule_id']);
         $this->assign('sch_info', $new_schedule);
         $this->assign('updated', $ago);
+        $this->assign('schedule_check', $schedule_check);
         if ($post_data == null) {
             $post_data = array('');
         }
@@ -454,8 +469,15 @@ class User extends Controller
     public function edit_sche()
     {
         $post_data = session('user_info');
+        $if_default = input('if_default');
+        $post_id = input('id');
+        if ($if_default == 'yes') {
+            $schedule_info = Db::name('schedule_info')->where('schedule_id', $post_data['default_schedule'])->find();
+        } elseif ($if_default == 'no') {
+            $schedule_info = Db::name('schedule_info')->where('schedule_id', $post_id)->find();
+        }
         $map2 = Often::mapWeek();
-        $schedule_info = Db::name('schedule_info')->where('schedule_id',$post_data['default_schedule'])->find();
+
         $get_schedule = Search::get_scheduleAll($map2, $schedule_info);
         $this->assign('mon', $get_schedule[0]);
         $this->assign('tue', $get_schedule[1]);
@@ -484,9 +506,9 @@ class User extends Controller
             'section_6', 'section_7', 'section_8', 'section_9', 'section_10',
         ];
         $i = Often::edit_save($weekMapOne, $sectionMapOne, $schedule, $data);
-        if($data['schedule_name'] == $schedule['schedule_name']){
+        if ($data['schedule_name'] == $schedule['schedule_name']) {
             $flag2 = 1;
-        }else{
+        } else {
             $flag2 = 0;
         }
         $cou = count($i);
@@ -494,20 +516,20 @@ class User extends Controller
         $message = "共修改 $cou1 项，修改的数据项为：";
         $num = 0;
         if ($cou == 0) {
-            if ($flag2 == 1){
+            if ($flag2 == 1) {
                 $message = '没有修改任何数据';
-            }elseif($flag2 == 0){
-                Db::name('schedule_info')->where('schedule_id', $data['schedule_id'])->update(['updated_at' => date("Y-m-d G:i:s"),'schedule_name'=>$data['schedule_name']]);
+            } elseif ($flag2 == 0) {
+                Db::name('schedule_info')->where('schedule_id', $data['schedule_id'])->update(['updated_at' => date("Y-m-d G:i:s"), 'schedule_name' => $data['schedule_name']]);
 
-                $message = '仅修改表名:'.$schedule['schedule_name'].'--->'.$data['schedule_name'];
+                $message = '仅修改表名:' . $schedule['schedule_name'] . '--->' . $data['schedule_name'];
             }
 
         } else {
             for ($num, $num1 = 1; $num < $cou; $num++, $num1++) {
                 $weekNumber = Often::englishCovertChinese($i[$num]);
                 $sectionNumber = Often::englishCovertChinese($i[++$num]);
-                Db::name('schedule_info')->where('schedule_id', $data['schedule_id'])->update(['updated_at' => date("Y-m-d G:i:s"),'schedule_name'=>$data['schedule_name']]);
-                $message = '表名:'.$schedule['schedule_name'].'--->'.$data['schedule_name']."\n".$message;
+                Db::name('schedule_info')->where('schedule_id', $data['schedule_id'])->update(['updated_at' => date("Y-m-d G:i:s"), 'schedule_name' => $data['schedule_name']]);
+                $message = '表名:' . $schedule['schedule_name'] . '--->' . $data['schedule_name'] . "\n" . $message;
                 $message = $message . "\n" . $num1 . ':' . $weekNumber . '  ' . $sectionNumber . "\n";
             }
         }
@@ -560,7 +582,7 @@ class User extends Controller
     {
         $student = Db::name('student')->where('student_name', '王杰')->find();
         $char = $student['schedule_list'];
-        $char = explode('_',$char);
+        $char = explode('_', $char);
         var_dump($student['schedule_list']);
         var_dump('--------------------->');
         var_dump($char);
@@ -608,10 +630,7 @@ class User extends Controller
                 'class_name' => $u['class_name'],
             ];
             $schedule = Db::name('schedule_info')->where($map1)->find();
-////        $map = Often::mapWeek();
-////        $week = Search::get_scheduleAll($map, $schedule);
-////        //$需要更新的表的地图$需要更新的表数据地图
-//////        Db::name('monday')->where('monday_id', $x['monday_id'])->update(['section_1' => $data['mon1']]);
+
             $weekMapOne = [
                 'monday', 'tuesday', 'wednesday',
                 'thursday', 'friday', 'saturday',
@@ -622,7 +641,7 @@ class User extends Controller
                 'section_6', 'section_7', 'section_8', 'section_9', 'section_10',
             ];
             $i = Often::edit_save($weekMapOne, $sectionMapOne, $schedule, $data);
-            Db::name('schedule_info')->where($map1)->update(['schedule_name' => $data['schedule_name']]);
+            Db::name('schedule_info')->where($map1)->update(['updated_at' => date("Y-m-d H:i:s"), 'if_public' => 'yes', 'schedule_name' => $data['schedule_name']]);
             $cou = count($i);
             $cou1 = $cou / 2;
             $message = "创建课程表：" . $data['schedule_name'] . "；\n共添加 $cou1 个课程，添加的课程时间为：";
@@ -636,7 +655,7 @@ class User extends Controller
                     $weekNumber = Often::englishCovertChinese($i[$num]);
                     $sectionNumber = Often::englishCovertChinese($i[++$num]);
                     $mapUp = ['school_name' => $u['school_name'], 'class_name' => $u['class_name']];
-                    Db::name('schedule_info')->where($mapUp)->update(['updated_at' => date("Y-m-d G:i:s")]);
+                    Db::name('schedule_info')->where($mapUp)->update(['updated_at' => date("Y-m-d H:i:s")]);
                     $message = $message . "\n" . $num1 . ':' . $weekNumber . '  ' . $sectionNumber . "\n";
                 }
             }
@@ -750,8 +769,7 @@ class User extends Controller
     {
 
         $post_data = session('user_info');
-        var_dump($post_data);
-        var_dump('------');
+
         $map1 = [
             'founder' => $post_data['student_name'],
             'class_name' => $post_data['class_name'],
@@ -766,13 +784,15 @@ class User extends Controller
 
 
         $student_info = Db::name('student')->where($map2)->find();
-        var_dump($student_info);
-        exit();
-        $default_schedule = 'false';
-        $list = Db::name('schedule_info')->where($map1)->paginate(5);
-        $page = $list->render();
 
-        $this->assign('default_schedule', $default_schedule);
+        $schedule_info_page = Db::name('schedule_info')->where($map1)->paginate(5);
+        $page = $schedule_info_page->render();
+        $list = $schedule_info_page->each(function ($item, $key) {
+            $item['updated_at'] = Convert::time_ago($item['updated_at']);
+
+            return $item;
+        });
+        $this->assign('default_schedule', $student_info['default_schedule']);
         $this->assign('list', $list);
         $this->assign('page', $page);
         return $this->fetch('schedule_list');
@@ -789,19 +809,12 @@ class User extends Controller
             'founder' => $post_data['student_name'],
             'default_schedule' => 'true',
         ];
-        Db::name('schedule_info')->where($map1)->update(['default_schedule' => 'false']);
-        Db::name('schedule_info')->where('schedule_id', $data_id)->update(['default_schedule' => 'true']);
-
+        Db::name('student')->where('student_id', $post_data['student_id'])->update(['default_schedule' => $data_id, 'updated_at' => date("Y-m-d H:i:s")]);
+        $user_info1 = Db::name('student')->where('student_id', $post_data['student_id'])->find();
+        session('user_info', $user_info1);
     }
 
     public function delete_list(Request $request)
-    {
-        $data_id = $request->param('id');
-        Db::name('schedule_info')->where('schedule_id', $data_id)->delete();
-
-    }
-
-    public function edit_schedule_js(Request $request)
     {
         $data_id = $request->param('id');
         Db::name('schedule_info')->where('schedule_id', $data_id)->delete();

@@ -50,11 +50,11 @@ class Index extends Controller
     public function browsing()
     {
         $user_info = session('user_info');
-        if ($user_info == null){
+        if ($user_info == null) {
             $user_info = 'index';
-        }elseif (array_key_exists('student_name',$user_info)){
+        } elseif (array_key_exists('student_name', $user_info)) {
             $user_info = 'user/student_index';
-        }elseif (array_key_exists('teacher_name',$user_info)){
+        } elseif (array_key_exists('teacher_name', $user_info)) {
             $user_info = 'user/teacher_index';
         }
         $post_data = input('id');
@@ -88,12 +88,11 @@ class Index extends Controller
         $week = input('week');
         $scheduleId = input('schedule_id');
         $post_data = session('user_info');
-
+        $user_identity = '0';
         $IdentityKey = '';
         $IdentityValue = '';
         if (!is_null($post_data)) {
             $flag = 1;
-
         } else {
             $flag = 0;
             $user_identity = '0';
@@ -107,8 +106,8 @@ class Index extends Controller
             $map = [$IdentityKey => $IdentityValue, 'section_name' => $section, 'week_name' => $week, 'schedule_id' => $scheduleId];
             $map1 = [$IdentityKey => $IdentityValue, 'section_name' => $section, 'week_name' => $week, 'schedule_id' => $scheduleId, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
             $notes_mine = Db::name('notes')->where($map)->find();
+//            var_dump($notes_mine);exit();
             if ($notes_mine == null) {
-
                 Db::name('notes')->insert($map1);
             }
         }
@@ -118,7 +117,7 @@ class Index extends Controller
 //        var_dump($notes);exit();
         $num = count($notes);
         $i = 0;
-        $notes2 = ['week_name' => '', 'section_name' => '', 'student_name' => ''];
+        $notes2 = ['week_name' => '', 'section_name' => '', 'student_name' => '', 'schedule_id' => '1'];
         $c_u_text1 = ['创建于：', '最后更新：'];
         $c_u_text2 = array();
         $num2 = array();
@@ -148,13 +147,13 @@ class Index extends Controller
             $num2[$c] = '';
         }
 
-
         $this->assign('user_identity', $user_identity);
         $this->assign('notes', $notes);
         $this->assign('num', $num);
         $this->assign('num1', $num - 2);
         $this->assign('c_u_text2', $c_u_text2);
         $this->assign('num2', $num2);
+
         $this->assign('notes2', $notes2);
         $this->assign('title', $title);
         $this->assign('schedule_id', $scheduleId);
@@ -186,10 +185,9 @@ class Index extends Controller
             $this->error(null, null, null, 1);
         }
         $map = [
-            'week_name' => $week_name, 'student_name' => $student_name, 'section_name' => $section_name,'schedule_id'=>$schedule_id
+            'week_name' => $week_name, 'student_name' => $student_name, 'section_name' => $section_name, 'schedule_id' => $schedule_id
         ];
         $student = Db::name('notes')->where($map)->find();
-
         $this->assign('course', $student['course_name']);
         $this->assign('schedule_id', $student['schedule_id']);
         $this->assign('flag2', $flag2);
@@ -197,6 +195,7 @@ class Index extends Controller
         $this->assign('student_name', $student_name);
         $this->assign('section_name', $section_name);
         $this->assign('note_text', $student['note_text']);
+        $this->assign('notes_id', $student['notes_id']);
         return $this->fetch('note_wall');
     }
 
@@ -278,10 +277,12 @@ class Index extends Controller
         $week_name = input('week_name');
         $student_name = input('student_name');
         $section_name = input('section_name');
+        $schedule_id = input('schedule_id');
         $map = [
             'week_name' => $week_name,
             'student_name' => $student_name,
-            'section_name' => $section_name
+            'section_name' => $section_name,
+            'schedule_id' => $schedule_id,
         ];
         session('edit_info', $map);
         $notes = Db::name('notes')->where($map)->find();
@@ -290,6 +291,7 @@ class Index extends Controller
         $this->assign('week_name', $week_name);
         $this->assign('student_name', $student_name);
         $this->assign('section_name', $section_name);
+        $this->assign('schedule_id', $schedule_id);
         return $this->fetch('edit_note');
     }
 
@@ -300,10 +302,18 @@ class Index extends Controller
         $result = '';     //返回错误的信息
         $data = $request->param();
         $result = $data['text1'];
-//        var_dump($data['text1']);
         Db::name('notes')->where($map)->update(['note_text' => $result]);
         return ['status' => $status, 'message' => $result, 'data' => $data];
 
     }
+
+    public function delete_note(Request $request)
+    {
+        //返回错误的信息
+        $data_id = $request->param('id');
+
+        Db::name('notes')->where('notes_id',$data_id)->update(['note_text'=>'','updated_at'=>date('Y-m-d H:i:s')]);
+    }
+
 
 }

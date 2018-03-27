@@ -23,7 +23,7 @@
     <ul class="nav nav-tabs">
 
         <li>
-            <a href="{:url('note_student_list',array('week'=>$week_name,'section'=>$section_name,'schedule_id'=>$schedule_id))}">返回</a>
+            <a href="{:url('note_student_list',array('schedule_id'=>$schedule_id,'week'=>$week_name,'section'=>$section_name))}">返回</a>
         </li>
 
     </ul>
@@ -43,13 +43,10 @@
     <div style="height: 50px" class="article clearfix">
 
         <ul style="height: 1px; padding-left: 40%" class="nav nav-pills">
-            <li><p style="line-height: 40px;display:inline-block; width:auto; text-align:center">
-               科目：{$course|default=""}</p>
-            </li>
             {eq name="$flag2" value="1"}
-                <li><a style="width:auto;height: 40px" href="{:url('edit_note',array('section_name'=>$section_name,'week_name'=>$week_name,'student_name'=>$student_name))}"> 编辑 </a>&nbsp;
+                <li><a style="width:auto;height: 40px" href="{:url('edit_note',array('schedule_id'=>$schedule_id,'section_name'=>$section_name,'week_name'=>$week_name,'student_name'=>$student_name))}"> 编辑 </a>&nbsp;
                 </li>
-                <li><a style="width:auto;height: 40px" href="#">删除 </a></li>
+                <li><a style="width:auto;height: 40px" onclick="delete_note(this,'{$notes_id}')" href="javascript:;">删除 </a></li>
             {/eq}
 
         </ul>
@@ -77,5 +74,16 @@
 </div>
 
 </body>
+<script>
+    function delete_note(obj, id) {
+        var url;
+        url = window.location.href;
 
+            $.get("{:url('delete_note')}", {id: id});
+            alert('删除成功');
+            window.location.href = url; //允许用户进入后台
+
+    }
+
+</script>
 </html>

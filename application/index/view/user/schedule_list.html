@@ -20,6 +20,10 @@
     <title>Title</title>
 </head>
 <body>
+<ul class="nav nav-pills">
+    <li><a href="{:url('student_index')}">返回</a></li>
+</ul>
+
 <h1>拥有的课表</h1>
 <hr>
 <div class="col-md-2">
@@ -53,7 +57,7 @@
 
 
     <ul class="nav nav-pills">
-
+        {neq name="$vol.schedule_name" value=""}
         <li class="col-md-2" style="list-style-type: none"><p style="text-align: center">{$vol.school_name}</p></li>
         <li class="col-md-1" style="list-style-type: none"><p style="text-align: center">{$vol.class_name}班</p></li>
         <li class="col-md-2" style="list-style-type: none"><p style="text-align: center">{$vol.schedule_name}</p></li>
@@ -61,17 +65,17 @@
         <li class="col-md-2" style="list-style-type: none"><p style="text-align: center">{$vol.updated_at}</p></li>
 
         <li class="col-md-1" style="list-style-type: none"><a style="text-align: center"
-                                                              onclick="edit_schedule(this,'{$vol.schedule_id}')"
-                                                              href="javascript:;">编辑</a></li>
-        <li class="col-md-1" style="list-style-type: none"><a style="text-align: center"
-                                                              onclick="delete_list(this,'{$vol.schedule_id}')"
-                                                              href="javascript:;">删除</a></li>
+                                                              href="{:url('edit_sche',array('if_default'=>'no','id'=>$vol.schedule_id))}">编辑</a>
+        </li>
+            <li class="col-md-1" style="list-style-type: none"><a style="text-align: center"
+                                                                  onclick="delete_list(this,'{$vol.schedule_id}','{$default_schedule}')"
+                                                                  href="javascript:;">删除</a></li>
 
-        {eq name="$vol.schedule_id" value='$default_schedule'}
+        {neq name="$vol.schedule_id" value='$default_schedule'}
         <li class="col-md-1" style="list-style-type: none"><a style="text-align: center;width:100px"
                                                               onclick="enable(this,'{$vol.schedule_id}')"
                                                               href="javascript:;">启用默认</a></li>
-        {/eq}
+        {/neq}
         {eq name="$vol.schedule_id" value='$default_schedule'}
         <li class="col-md-1" style="list-style-type: none;height: 40px">
             <p style="color: #880000;line-height: 40px;background-color: #4288ce;text-align: center;">
@@ -80,7 +84,7 @@
         </li>
         {/eq}
 
-
+        {/neq}
     </ul>
     <hr>
 
@@ -91,13 +95,7 @@
 </form>
 </body>
 <script>
-    function edit_schedule(obj, id) {
-        var url;
-        url = window.location.href;
-        $.get("{:url('edit_schedule_js')}", {id: id});
-        // alert('默认课表更改成功！');
-        window.location.href = url; //允许用户进入后台
-    }
+
 
     function enable(obj, id) {
         var url;
@@ -111,7 +109,7 @@
         var url;
         url = window.location.href;
 
-        if (flag1 == 'true') {
+        if (flag1 == id) {
             alert('当前选中课表为默认课表，请解除默认再操作');
         } else {
             $.get("{:url('delete_list')}", {id: id});
